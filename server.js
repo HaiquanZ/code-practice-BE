@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const userRouter = require('./routers/userRouter');
 const taskRouter = require('./routers/taskRouter');
+const commentRouter = require('./routers/commentRouter');
 const errorHandler = require('./middlewares/errorHandler')
 
 const app = express();
@@ -13,6 +14,7 @@ const port = 8000;
 
 app.use('/api/users', userRouter);
 app.use('/api/tasks', taskRouter);
+app.use('/api/comments', commentRouter)
 app.use(errorHandler);
 
 app.listen(port, () => {

@@ -78,6 +78,25 @@ exports.register = async (req, res, next) => {
     }
 };
 
+exports.getUserById = async (req, res, next) => {
+    try{
+        const id = req.params.id;
+        const user = await userModel.getUserById(id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+        res.status(200).json({
+            userId: user.id,
+            name: user.name,
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
 async function checkValidUser(user) {
 
     if (!validator.validate(user.email)) {

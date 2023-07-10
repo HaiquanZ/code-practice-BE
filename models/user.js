@@ -20,3 +20,8 @@ exports.getUserByEmail = async (email) => {
     const [rows] = await db.promise().query('SELECT * FROM user WHERE email = ? LIMIT 1', [email]);
     return rows[0];
 }
+
+exports.getUserById = async (id) => {
+    const [rows] = await db.promise().query('SELECT * FROM user WHERE id =? LIMIT 1', [id]);
+    return rows[0];
+}

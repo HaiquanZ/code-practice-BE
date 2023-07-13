@@ -25,3 +25,24 @@ exports.getUserById = async (id) => {
     const [rows] = await db.promise().query('SELECT * FROM user WHERE id =? LIMIT 1', [id]);
     return rows[0];
 }
+
+exports.getUserTask = async (taskId, userId) => {
+    const [rows] = await db.promise().query('SELECT * FROM user_task WHERE user_id =? AND task_id =? LIMIT 1', [userId, taskId]);
+    return rows[0];
+}
+
+exports.createUserTask = async (taskId, userId) => {
+    await db.promise().query('INSERT INTO user_task (user_id, task_id, pass) VALUES(?,?,?)', [userId, taskId, 'Yes']);
+}
+
+exports.addPoint = async (userId) => {
+    var trophy = await db.promise().query('SELECT trophy FROM user WHERE id = ? LIMIT 1', [userId]);
+    //console.log(trophy[0][0]);
+    trophy[0][0].trophy += 10;
+    await db.promise().query('UPDATE user SET trophy =? WHERE id =?', [trophy[0][0].trophy, userId]);
+}
+
+exports.getAllUsers = async () => {
+    const [rows] = await db.promise().query('SELECT name, trophy FROM user WHERE role_id = 0 ORDER BY user.trophy DESC;');
+    return rows;
+}

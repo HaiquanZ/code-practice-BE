@@ -35,7 +35,12 @@ exports.login = async (req, res, next) => {
         res.status(200).json({
             message: 'Login success',
             token,
-            userID: user.id,
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            gender: user.gender,
+            trophy: user.trophy,
+            rank: user.rank
         });
     }catch(err){
         next(err);
@@ -91,6 +96,42 @@ exports.getUserById = async (req, res, next) => {
         res.status(200).json({
             userId: user.id,
             name: user.name,
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+exports.addPoint = async (req, res, next) => {
+    try{
+        const userId = req.user.user.id;
+        const taskId = req.body.taskId;
+
+        //console.log(req);
+
+        const user_task = await userModel.getUserTask(taskId, userId);
+        if (!user_task){
+            await userModel.createUserTask(taskId, userId);
+            await userModel.addPoint(userId);
+            res.status(200).json({
+                message: 'Point added successfully'
+            })
+        }else{
+            res.status(400).json({
+                message: 'User have already passed the task'
+            })
+        }
+    }catch(err){
+        next(err);
+    }
+}
+
+exports.getAllUsers = async (req, res, next) => {
+    try{
+        const users = await userModel.getAllUsers();
+
+        res.status(200).json({
+            users,
         })
     }catch(err){
         next(err);

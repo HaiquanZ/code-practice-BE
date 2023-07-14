@@ -117,7 +117,7 @@ exports.addPoint = async (req, res, next) => {
                 message: 'Point added successfully'
             })
         }else{
-            res.status(400).json({
+            res.status(200).json({
                 message: 'User have already passed the task'
             })
         }

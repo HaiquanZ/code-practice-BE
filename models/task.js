@@ -35,3 +35,11 @@ exports.updateTask = async (id, taskData) => {
 exports.deleteTask = async (id) => {
     await db.promise().query('DELETE FROM task WHERE id =?', [id]);
 }
+
+exports.getUserTaskByUserId = async (userId) => {
+    const [rows] = await db.promise().query('SELECT task_id, pass FROM user_task WHERE user_id =?', [userId]);
+    return rows.map(row => ({
+        taskId: row.task_id,
+        pass: row.pass
+    }));
+}

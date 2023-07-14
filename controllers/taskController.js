@@ -117,3 +117,27 @@ exports.deleteTask = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.getUserTaskByUserId = async (req, res, next) => {
+    try{
+        const userId = req.user.user.id;
+
+        const userTask = await taskModel.getUserTaskByUserId(userId);
+
+        const tasks = await taskModel.getAllTasks();
+
+        userTask.map((usertask) => {
+            tasks.map((task) => {
+                if (task.id === usertask.taskId){
+                    task.pass = 'Yes';
+                }
+            })
+        })
+
+        res.status(200).json({
+            tasks,
+        })
+    }catch(err){
+        next(err);
+    }
+}

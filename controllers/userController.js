@@ -40,7 +40,8 @@ exports.login = async (req, res, next) => {
             email: user.email,
             gender: user.gender,
             trophy: user.trophy,
-            rank: user.rank
+            rank: user.rank,
+            role_id: user.role_id
         });
     }catch(err){
         next(err);

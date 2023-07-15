@@ -4,15 +4,15 @@ CodePractice Website là một dự án tạo ra một website luyện tâ
 Link repo FrontEnd: https://github.com/HaiquanZ/code-practice-fe
 ## 2. Chức năng
 Trang web cung cấp các chức năng  
-**Khách (Guest)**
+### Khách (Guest)
 - Xem bảng xếp hạng người dùng
 - Xem các bài tập, xem chi tiết từng bài tập (task)
 - Đăng ký  
-**Người dùng (User)**
+### Người dùng (User)
 - Đăng nhập
 - Làm các bài tập, cộng điểm, tăng xếp hạng
 - Bình luận về bài tập  
-**Quản trị viên (Admin)**
+### Quản trị viên (Admin)
 - Quản lý các bài tập (task)
 - Quản lý người dùng
 - Quản lý bình luận

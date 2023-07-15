@@ -5,6 +5,7 @@ const authorize = require('../middlewares/auth');
 
 router.post('/update', authorize, commentController.updateComment);
 router.post('/:id', authorize, commentController.createComment);
+router.get('/', authorize ,commentController.getAllComments);
 router.get('/:id', commentController.getCommentByTaskId);
 router.delete('/:id', authorize ,commentController.deleteComment);
 

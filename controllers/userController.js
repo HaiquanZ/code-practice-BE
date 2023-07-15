@@ -139,6 +139,25 @@ exports.getAllUsers = async (req, res, next) => {
     }
 }
 
+exports.deleteUser = async (req, res, next) => {
+    try{
+        //check is admin
+        if (req.user.user.role_id !== 1) {
+            return res.status(401).json({
+                message: 'You are not admin'
+            });
+        }else{
+            const id = req.params.id;
+            await userModel.deleteUser(id);
+            res.status(200).json({
+                message: 'User deleted successfully'
+            })
+        }
+    }catch(err){
+        next(err);
+    }
+}
+
 async function checkValidUser(user) {
 
     if (!validator.validate(user.email)) {

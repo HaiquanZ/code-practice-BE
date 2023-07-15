@@ -33,7 +33,7 @@ exports.getTaskById = async (req, res, next) => {
 exports.createTask = async (req, res, next) => {
     try{
         //check admin id
-        const adminId = req.user.user.id;
+        const adminId = req.user.user.role_id;
         if (adminId !== 1){
             return res.status(401).json({
                 message: 'You are not authorized to perform this action'
@@ -65,7 +65,7 @@ exports.createTask = async (req, res, next) => {
 exports.updateTask = async (req, res, next) => {
     try{
         //check admin id
-        const adminId = req.user.user.id;
+        const adminId = req.user.user.role_id;
         if (adminId !== 1){
             return res.status(401).json({
                 message: 'You are not authorized to perform this action'
@@ -95,7 +95,7 @@ exports.updateTask = async (req, res, next) => {
 exports.deleteTask = async (req, res, next) => {
     try{
         //check admin id
-        const adminId = req.user.user.id;
+        const adminId = req.user.user.role_id;
         if (adminId !== 1){
             return res.status(401).json({
                 message: 'You are not authorized to perform this action'

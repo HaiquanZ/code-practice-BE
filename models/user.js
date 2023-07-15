@@ -43,6 +43,10 @@ exports.addPoint = async (userId) => {
 }
 
 exports.getAllUsers = async () => {
-    const [rows] = await db.promise().query('SELECT name, trophy FROM user WHERE role_id = 0 ORDER BY user.trophy DESC;');
+    const [rows] = await db.promise().query('SELECT name, trophy, id FROM user WHERE role_id = 0 ORDER BY user.trophy DESC;');
     return rows;
+}
+
+exports.deleteUser = async (userId) => {
+    await db.promise().query('DELETE FROM user WHERE id =?', [userId]);
 }

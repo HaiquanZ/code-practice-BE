@@ -49,6 +49,25 @@ exports.getCommentByTaskId = async (req, res, next) => {
     }
 }
 
+exports.getAllComments = async (req, res, next) => {
+    try{
+        //check is admin
+        const adminId = req.user.user.role_id;
+        if (adminId !== 1){
+            return res.status(401).json({
+                message: 'You are not authorized to perform this action'
+            })
+        }
+
+        const comments = await commentModel.getAllComments();
+        res.status(200).json({
+            comments
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
 exports.updateComment = async (req, res, next) => {
     try{
         const {id, comment} = req.body;
@@ -69,7 +88,7 @@ exports.updateComment = async (req, res, next) => {
 
         await commentModel.updateComment(comment, id);
         res.status(200).json({
-            message: 'comment updated successfully',
+            message: 'Comment updated successfully',
         })
     }catch(err){
         next(err);
@@ -78,18 +97,20 @@ exports.updateComment = async (req, res, next) => {
 
 exports.deleteComment = async (req, res, next) => {
     try{
-        //check if comment is owned by user
+        //check if comment is owned by user or admin
         const {userId} = req.body;
-        if (userId !== req.user.user.id){
+        if (req.user.user.role_id === 1 || userId === req.user.user.id){
+            const {id} = req.params;
+            await commentModel.deleteComment(id);
+            return res.status(200).json({
+                message: 'Comment deleted successfully',
+            })
+        }else{
             return res.status(401).json({
                 message: 'Unauthorized'
             });
         }
-        const {id} = req.params;
-        await commentModel.deleteComment(id);
-        res.status(200).json({
-            message: 'comment deleted successfully',
-        })
+        
     }catch(err){
         next(err);
     }

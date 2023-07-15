@@ -14,6 +14,17 @@ exports.getCommentByTaskId = async (taskId) => {
     }))
 }
 
+exports.getAllComments = async () => {
+    const [rows] = await db.promise().query('SELECT `comment`.`id`, `user`.`name` AS `user_name`, `comment`.`content`, `task`.`name` AS `task_name` FROM `user`, `comment`, `task` WHERE `user`.`id` = `comment`.`user_id` AND `task`.`id` = `comment`.`task_id` ORDER BY `comment`.`id` DESC;');
+    console.log(rows);
+    return rows.map((row) => ({
+        commentid: row.id,
+        userName: row.user_name,
+        comment: row.content,
+        taskName: row.task_name
+    }))
+}
+
 exports.updateComment = async (comment, id) => {
     await db.promise().query('UPDATE comment SET content = ?, updated_at = ? WHERE id = ?',[comment, new Date(),id]);
 }

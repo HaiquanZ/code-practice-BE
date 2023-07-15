@@ -1,4 +1,5 @@
 const taskModel = require('../models/task');
+const testModel = require('../models/test');
 
 exports.getAllTasks = async (req, res, next) => {
     try{
@@ -53,9 +54,12 @@ exports.createTask = async (req, res, next) => {
 
         const taskId = await taskModel.createTask(task);
 
+        const testId = await testModel.createTest(taskId, req.body.input, req.body.output);
+
         res.status(200).json({
             message: 'Task created successfully',
             taskId,
+            testId
         })
     }catch(err){
         next(err);
